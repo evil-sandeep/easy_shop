@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MERN Shopping App: Shop near local markets with guaranteed delivery to your home within two days, ensuring correct order fulfillment.",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "test": "jest",
