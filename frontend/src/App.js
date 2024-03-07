@@ -1,4 +1,5 @@
 import React from "react";
+// import './index'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import Header from "./components/Header";
@@ -14,7 +15,7 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" Component={HomeScreen} exact />
-            <Route path="/product/:id" Component={ProductScreen}  />
+            <Route path="/product/:id" Component={ProductScreen} />
           </Routes>
         </Container>
 
