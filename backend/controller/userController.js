@@ -14,6 +14,7 @@ const authUser = asyncHandler(async (req, res) => {
         res.json({
             _id: user._id,
             name: user.name,
+            email: user.email,
             // password: user.password,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
@@ -23,4 +24,27 @@ const authUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid email or password');
     }
 })
-export { authUser }
+// @desc   Get User Profile
+// @route   GER /api/users/profile
+// @access  Public
+const getUserProfile = asyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            isAdmin: user.isAdmin,
+
+        })
+    } else {
+        res.status(404)
+        throw new Error('User Is Not Found')
+    }
+    console.log(`User Data Fatched Succesfully`.brightYellow.inverse)
+
+})
+export { authUser, getUserProfile }
