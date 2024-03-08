@@ -25,7 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
     }
 })
 // @desc   Get User Profile
-// @route   GER /api/users/profile
+// @route   GET /api/users/profile
 // @access  Public
 const getUserProfile = asyncHandler(async (req, res) => {
 
@@ -47,4 +47,34 @@ const getUserProfile = asyncHandler(async (req, res) => {
     console.log(`User Data Fatched Succesfully`.brightYellow.inverse)
 
 })
-export { authUser, getUserProfile }
+
+// @desc   Register a new user
+// @route   POST /api/users/
+// @access  Public
+const registerUser = asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body
+    const userExits = await User.findOne({ email })
+
+
+    if (userExits) {
+        res.status(400)
+        throw new Error('User Already Exists')
+    }
+    const user = await User.create({
+        name, email, password
+    })
+
+    if (user) {
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid user Data');
+    }
+})
+export { authUser, getUserProfile ,registerUser}
